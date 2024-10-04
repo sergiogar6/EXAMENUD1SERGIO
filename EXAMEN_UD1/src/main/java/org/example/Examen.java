@@ -1,4 +1,7 @@
 package org.example;
+import com.sun.jdi.event.Event;
+import com.sun.jdi.event.MethodExitEvent;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -37,30 +40,45 @@ public class Examen {
     public void ejercicio2() {
 
         Scanner entry = new Scanner(System.in);
-        
+        float ancho_pared = 1;
+        float ancho_azulejo = 1;
+        float largo_pared = 1;
+        float largo_azulejo = 1;
+
         System.out.println("Introduce tu nombre:");
         String name = entry.nextLine();
 
         System.out.println("La obra de " + name);
 
-        //Define las medidas de los azulejos y pared preguntandolas por pantalla y las guarda con valor de coma flotante.
-        System.out.println("Introduce el ancho de la pared...");
-        float ancho_pared = entry.nextFloat();
+        try {
+            //Define las medidas de los azulejos y pared preguntandolas por pantalla y las guarda con valor de coma flotante.
+            System.out.println("Introduce el ancho de la pared...");
+            ancho_pared = entry.nextFloat();
 
-        System.out.println("Introduce el largo de la pared...");
-        float largo_pared = entry.nextFloat();
+            System.out.println("Introduce el largo de la pared...");
+            largo_pared = entry.nextFloat();
 
-        System.out.println("Introduce el ancho del azulejo...");
-        float ancho_azulejo = entry.nextFloat();
+            System.out.println("Introduce el ancho del azulejo...");
+            ancho_azulejo = entry.nextFloat();
 
-        System.out.println("Introduce el largo del azulejo...");
-        float largo_azulejo = entry.nextFloat();
+            System.out.println("Introduce el largo del azulejo...");
+            largo_azulejo = entry.nextFloat();
+
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("ERROR. Introduce un valor valido");
+            System.exit(1);
+        }
+
+
 
         //Calcula el area de la pared y del azulejo y las divide para saber el total de azulejos que caben el la pared.
         float resultado = (ancho_pared * largo_pared) / (ancho_azulejo * largo_azulejo);
 
+        if (ancho_azulejo <= 0 || ancho_pared <= 0 || largo_azulejo <= 0 || largo_pared <= 0){
+            System.out.println("Los valores no pueden ser negativos o 0");
+        }
         //Comprueba si los azulejos tienen el mismo ancho y alto (cuadrado)
-        if (ancho_azulejo == largo_azulejo) {
+        else if (ancho_azulejo == largo_azulejo) {
             System.out.println("El azulejo no puede ser cuadrado.");
         }
         //Comprueba si el azulejo es mas grande que la pared
@@ -71,8 +89,6 @@ public class Examen {
         else {
             System.out.println("Se necesitan " + resultado + " azulejos");
         }
-
-
 
     }
 }
